@@ -1,0 +1,16 @@
+{
+  "name": "baselog-contracts",
+  "version": "1.0.0",
+  "description": "Smart contracts for BaseLog DApp",
+  "scripts": {
+    "compile": "hardhat compile",
+    "deploy:base": "hardhat run scripts/deploy.ts --network base",
+    "deploy:base-sepolia": "hardhat run scripts/deploy.ts --network baseSepolia",
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "^5.0.1",
+    "hardhat": "^2.19.5"
+  }
+}

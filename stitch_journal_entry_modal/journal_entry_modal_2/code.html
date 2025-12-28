@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Base Diary - Journal Entry Modal (Dark Mode)</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#0052FF","background-light": "#f5f6f8",
+                "background-dark": "#0f1117","card-dark": "#1e2025","border-dark": "#2d3039",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"],
+                "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+              boxShadow: {
+                'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.3)',
+                'glow': '0 0 15px rgba(0, 82, 255, 0.3)'
+              }
+            },
+          },
+        }
+      </script>
+<style>.hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-gray-100 h-screen overflow-hidden selection:bg-primary/20 selection:text-primary">
+<div aria-hidden="true" class="absolute inset-0 z-0 flex flex-col p-4 opacity-100 pointer-events-none overflow-hidden">
+<div class="h-16 w-full bg-card-dark rounded-xl mb-4 shadow-sm border border-border-dark"></div>
+<div class="flex gap-4 mb-4">
+<div class="h-32 w-1/2 bg-card-dark rounded-xl shadow-sm border border-border-dark"></div>
+<div class="h-32 w-1/2 bg-card-dark rounded-xl shadow-sm border border-border-dark"></div>
+</div>
+<div class="flex-1 w-full bg-card-dark rounded-xl shadow-sm border border-border-dark"></div>
+</div>
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md transition-all duration-300">
+<div class="relative w-full max-w-[380px] bg-[#1a1d24] rounded-2xl shadow-soft flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200 ring-1 ring-white/10">
+<div class="px-6 py-5 border-b border-white/5 relative bg-[#1a1d24]">
+<button class="absolute top-4 right-4 text-gray-500 hover:text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<div class="flex items-start gap-4 pr-6">
+<div class="relative shrink-0 mt-1">
+<div class="h-10 w-10 rounded-full bg-red-500/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-500 text-[20px]">arrow_outward</span>
+</div>
+<div class="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-red-500 border-2 border-[#1a1d24]"></div>
+</div>
+<div class="flex flex-col">
+<p class="text-white text-[15px] font-semibold leading-snug">
+                            Sent 0.05 ETH to <span class="font-mono text-gray-400 font-medium">0x123...45</span>
+</p>
+<p class="text-gray-500 text-xs font-medium mt-1">Dec 28, 2025 • 10:42 AM</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col px-6 py-6 gap-6 bg-[#1a1d24]">
+<div class="w-full">
+<input class="w-full text-2xl font-bold text-white placeholder:text-gray-600 border-none p-0 focus:ring-0 bg-transparent" placeholder="What was this for?" type="text"/>
+</div>
+<div class="w-full overflow-x-auto hide-scrollbar -mx-6 px-6">
+<div class="flex gap-2 min-w-max pb-1">
+<button class="h-8 px-4 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-medium transition-colors flex items-center">
+                            Food
+                        </button>
+<button class="h-8 px-4 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-medium transition-colors flex items-center">
+                            Rent
+                        </button>
+<button class="h-8 px-4 rounded-full bg-primary text-white shadow-glow border border-primary text-sm font-medium transition-colors flex items-center">
+                            DeFi
+                        </button>
+<button class="h-8 px-4 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-medium transition-colors flex items-center">
+                            Gas
+                        </button>
+<button class="h-8 px-4 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 text-gray-300 text-sm font-medium transition-colors flex items-center">
+                            Salary
+                        </button>
+</div>
+</div>
+<div class="w-full">
+<textarea class="w-full min-h-[100px] resize-none text-base text-gray-300 placeholder:text-gray-600 bg-transparent border-none p-0 focus:ring-0 leading-relaxed" placeholder="Add details about this transaction..."></textarea>
+</div>
+<div class="flex items-center justify-between py-3 px-4 bg-white/5 rounded-xl border border-white/5">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-gray-400 text-[20px]">lock</span>
+<span class="text-sm font-medium text-gray-200">Encrypt Entry</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="p-6 pt-0 bg-[#1a1d24]">
+<button class="group relative w-full h-12 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 rounded-lg text-white font-medium transition-all shadow-lg shadow-primary/20 overflow-hidden">
+<div class="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10"></div>
+<span class="material-symbols-outlined text-[20px] relative z-20">history_edu</span>
+<span class="relative z-20">Mint Entry (+10 LOG)</span>
+</button>
+<div class="mt-3 text-center flex items-center justify-center gap-1.5 opacity-70">
+<span class="material-symbols-outlined text-[14px] text-primary">local_gas_station</span>
+<p class="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Gas covered by Paymaster</p>
+</div>
+</div>
+</div>
+</div>
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+
+</body></html>

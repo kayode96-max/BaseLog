@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Memory Lane Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0052FF", // Base Blue
+                        "primary-content": "#FFFFFF",
+                        "secondary": "#EAECEF",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#0f1523",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#1E2330",
+                        "text-main": "#101318",
+                        "text-muted": "#6B7280",
+                        "border-light": "#E5E7EB",
+                        "border-dark": "#2D3748",
+                        "success": "#059669",
+                        "danger": "#DC2626",
+                        "warning": "#D97706",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "md": "0.5rem", // 8px requested
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 2px 8px -2px rgba(0, 0, 0, 0.05), 0 1px 4px -1px rgba(0, 0, 0, 0.02)",
+                        "card": "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* Custom scrollbar for cleanliness */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#F9FAFB] dark:bg-background-dark text-text-main font-display min-h-screen relative overflow-x-hidden">
+<!-- Mobile Header -->
+<header class="sticky top-0 z-40 bg-background-light/90 backdrop-blur-md border-b border-border-light dark:border-border-dark dark:bg-background-dark/90 px-4 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<button class="p-2 -ml-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-text-main">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-lg font-bold tracking-tight text-text-main">Memory Lane</h1>
+</div>
+<button class="relative w-9 h-9 overflow-hidden rounded-full border border-border-light shadow-sm">
+<div class="w-full h-full bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center text-primary font-bold text-xs" data-alt="User Avatar Abstract Gradient">
+                JD
+            </div>
+<!-- Notification Dot -->
+<div class="absolute top-0 right-0 w-2.5 h-2.5 bg-danger rounded-full border-2 border-white"></div>
+</button>
+</header>
+<main class="w-full max-w-md mx-auto pb-24">
+<!-- Search Section -->
+<div class="px-4 py-4 sticky top-16 z-30 bg-[#F9FAFB] dark:bg-background-dark">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-muted text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 border border-border-light rounded-md leading-5 bg-white placeholder-text-muted focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm shadow-sm transition-shadow duration-200" placeholder="Search notes, tags, or amounts..." type="text"/>
+</div>
+</div>
+<!-- Analytics Card (Donut Chart) -->
+<div class="px-4 mb-6">
+<div class="bg-white dark:bg-surface-dark rounded-md border border-border-light dark:border-border-dark shadow-soft p-5">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-sm font-semibold text-text-main uppercase tracking-wider">Spending by Category</h2>
+<button class="text-xs text-primary font-medium hover:underline">View All</button>
+</div>
+<div class="flex flex-row items-center gap-6">
+<!-- Donut Chart Visual -->
+<div class="relative w-32 h-32 flex-shrink-0">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 36 36">
+<!-- Background Circle -->
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.8"></path>
+<!-- Segment 1: Food (Blue) -->
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="40, 100" stroke-width="3.8"></path>
+<!-- Segment 2: Gas (Purple) -->
+<path class="text-purple-500" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="25, 100" stroke-dashoffset="-40" stroke-width="3.8"></path>
+<!-- Segment 3: DeFi (Teal) -->
+<path class="text-teal-400" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="20, 100" stroke-dashoffset="-65" stroke-width="3.8"></path>
+</svg>
+<!-- Center Text -->
+<div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+<span class="text-[10px] text-text-muted font-medium">Total</span>
+<span class="text-sm font-bold text-text-main">4.2 ETH</span>
+</div>
+</div>
+<!-- Legend -->
+<div class="flex-1 space-y-3">
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-text-main font-medium">Food &amp; Dining</span>
+</div>
+<span class="text-text-muted">40%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+<span class="text-text-main font-medium">Gas Fees</span>
+</div>
+<span class="text-text-muted">25%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-teal-400"></span>
+<span class="text-text-main font-medium">DeFi Swaps</span>
+</div>
+<span class="text-text-muted">20%</span>
+</div>
+<div class="flex items-center justify-between text-xs">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span>
+<span class="text-text-main font-medium">Other</span>
+</div>
+<span class="text-text-muted">15%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="px-4 mb-4 flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+<button class="px-4 py-1.5 bg-text-main text-white rounded-full text-xs font-medium whitespace-nowrap shadow-sm">All History</button>
+<button class="px-4 py-1.5 bg-white border border-border-light text-text-muted rounded-full text-xs font-medium whitespace-nowrap shadow-sm">Journaled</button>
+<button class="px-4 py-1.5 bg-white border border-border-light text-text-muted rounded-full text-xs font-medium whitespace-nowrap shadow-sm">Incoming</button>
+<button class="px-4 py-1.5 bg-white border border-border-light text-text-muted rounded-full text-xs font-medium whitespace-nowrap shadow-sm">Outgoing</button>
+</div>
+<!-- Transaction Feed -->
+<div class="px-4 space-y-3">
+<h3 class="text-xs font-semibold text-text-muted uppercase tracking-wider mb-2 ml-1">Recent Activity</h3>
+<!-- Card 1: Journaled & Outgoing -->
+<div class="group bg-white dark:bg-surface-dark rounded-md border border-border-light dark:border-border-dark p-4 shadow-soft hover:shadow-md transition-all cursor-pointer relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-xl flex-shrink-0 border border-gray-100">
+                            🍔
+                        </div>
+<div>
+<div class="flex items-center gap-1.5">
+<h4 class="text-sm font-semibold text-text-main leading-tight">Dinner with Client</h4>
+<span class="material-symbols-outlined text-yellow-500 text-[16px]" title="Journaled">verified</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-blue-50 text-blue-700">#business</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-600">Oct 24, 2023</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="text-sm font-bold text-text-main">-0.05 ETH</span>
+<div class="w-2 h-2 rounded-full bg-danger" title="Outgoing Asset"></div>
+</div>
+<span class="text-[10px] text-text-muted font-mono block mt-1">~$156.42</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Incoming Asset -->
+<div class="group bg-white dark:bg-surface-dark rounded-md border border-border-light dark:border-border-dark p-4 shadow-soft hover:shadow-md transition-all cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="w-10 h-10 rounded-full bg-pink-50 flex items-center justify-center text-xl flex-shrink-0 border border-pink-100">
+                            🦄
+                        </div>
+<div>
+<div class="flex items-center gap-1.5">
+<h4 class="text-sm font-semibold text-text-main leading-tight">Uniswap Airdrop</h4>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-pink-50 text-pink-700">#defi</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-600">Oct 22, 2023</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="text-sm font-bold text-success">+250 UNI</span>
+<div class="w-2 h-2 rounded-full bg-success" title="Incoming Asset"></div>
+</div>
+<span class="text-[10px] text-text-muted font-mono block mt-1">~$1,240.00</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Undocumented Outgoing -->
+<div class="group bg-white dark:bg-surface-dark rounded-md border border-border-light dark:border-border-dark p-4 shadow-soft hover:shadow-md transition-all cursor-pointer opacity-80 hover:opacity-100">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-text-muted flex-shrink-0 border border-gray-100">
+<span class="material-symbols-outlined text-[20px]">local_gas_station</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h4 class="text-sm font-medium text-text-main leading-tight italic text-text-muted">Unjournaled Transaction</h4>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-500">Gas Fees - Mint</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-600">Oct 20, 2023</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="text-sm font-bold text-text-main">-0.01 ETH</span>
+<!-- Ghost Ring Indicator -->
+<div class="w-2 h-2 rounded-full border border-gray-400" title="Undocumented"></div>
+</div>
+<span class="text-[10px] text-text-muted font-mono block mt-1">~$18.50</span>
+</div>
+</div>
+</div>
+<!-- Card 4: Subscription -->
+<div class="group bg-white dark:bg-surface-dark rounded-md border border-border-light dark:border-border-dark p-4 shadow-soft hover:shadow-md transition-all cursor-pointer relative overflow-hidden">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<div class="w-10 h-10 rounded-full bg-indigo-50 flex items-center justify-center text-xl flex-shrink-0 border border-indigo-100">
+                            ☁️
+                        </div>
+<div>
+<div class="flex items-center gap-1.5">
+<h4 class="text-sm font-semibold text-text-main leading-tight">Server Costs</h4>
+<span class="material-symbols-outlined text-yellow-500 text-[16px]" title="Journaled">verified</span>
+</div>
+<div class="flex flex-wrap gap-1 mt-1">
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-indigo-50 text-indigo-700">#infrastructure</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-gray-50 text-gray-600">Oct 18, 2023</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<div class="flex items-center justify-end gap-1">
+<span class="text-sm font-bold text-text-main">-0.2 ETH</span>
+<div class="w-2 h-2 rounded-full bg-danger" title="Outgoing Asset"></div>
+</div>
+<span class="text-[10px] text-text-muted font-mono block mt-1">~$364.10</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Side Navigation Drawer (Hidden by default, structure for mobile context) -->
+<!-- In a real implementation, this would be toggled via JS. Here it is visually represented as if it could slide in. -->
+<div class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm hidden" id="drawer-overlay"></div>
+<div class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-surface-dark shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out" id="drawer">
+<div class="flex flex-col h-full p-4">
+<div class="mb-8 px-2 pt-2">
+<h2 class="text-xl font-bold text-text-main tracking-tight">Base Diary</h2>
+<p class="text-xs text-text-muted">v1.0.2</p>
+</div>
+<nav class="space-y-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-text-muted hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md bg-blue-50 text-primary dark:bg-primary/10" href="#">
+<span class="material-symbols-outlined text-[20px] fill-current">history_edu</span>
+<span class="text-sm font-bold">Memory Lane</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-text-muted hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">account_balance_wallet</span>
+<span class="text-sm font-medium">Wallet</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-md text-text-muted hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-border-light dark:border-border-dark mt-auto">
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
+                        B
+                    </div>
+<div>
+<p class="text-sm font-medium text-text-main">base.eth</p>
+<p class="text-xs text-text-muted truncate w-32">0x123...456</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button (Optional for "New Entry") -->
+<button class="fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-lg hover:bg-blue-700 flex items-center justify-center transition-all hover:scale-105 active:scale-95 z-40">
+<span class="material-symbols-outlined text-[28px]">edit_note</span>
+</button>
+</body></html>
