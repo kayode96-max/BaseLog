@@ -1,10 +1,13 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAccount, useReadContracts } from 'wagmi';
-import { JOURNAL_REGISTRY_ABI, JOURNAL_REGISTRY_ADDRESS } from '@/lib/contracts';
-import { Transaction } from '@/types';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useAccount, useReadContracts } from "wagmi";
+import {
+  JOURNAL_REGISTRY_ABI,
+  JOURNAL_REGISTRY_ADDRESS,
+} from "@/lib/contracts";
+import { Transaction } from "@/types";
+import axios from "axios";
 
 const COVALENT_API_KEY = process.env.NEXT_PUBLIC_COVALENT_API_KEY;
 const BASE_CHAIN_ID = 8453; // Base Mainnet
@@ -40,8 +43,8 @@ export function useBaseTransactions() {
         `https://api.covalenthq.com/v1/${BASE_CHAIN_ID}/address/${address}/transactions_v2/`,
         {
           params: {
-            'quote-currency': 'USD',
-            'page-size': 100,
+            "quote-currency": "USD",
+            "page-size": 100,
             key: COVALENT_API_KEY,
           },
         }
@@ -56,7 +59,10 @@ export function useBaseTransactions() {
         amount: (parseInt(tx.value) / 1e18).toFixed(4),
         from: tx.from_address,
         to: tx.to_address,
-        type: tx.from_address.toLowerCase() === address.toLowerCase() ? 'sent' : 'received',
+        type:
+          tx.from_address.toLowerCase() === address.toLowerCase()
+            ? "sent"
+            : "received",
         hasNote: false, // Will be updated below
         gasUsed: tx.gas_spent?.toString(),
         value: tx.value,
@@ -64,9 +70,9 @@ export function useBaseTransactions() {
 
       setTransactions(formattedTransactions);
     } catch (err) {
-      console.error('Error fetching transactions:', err);
-      setError('Failed to fetch transactions');
-      
+      console.error("Error fetching transactions:", err);
+      setError("Failed to fetch transactions");
+
       // Use mock data for development
       setTransactions(getMockTransactions(address));
     } finally {
@@ -78,12 +84,12 @@ export function useBaseTransactions() {
     contracts: transactions.map((tx) => ({
       address: JOURNAL_REGISTRY_ADDRESS,
       abi: JOURNAL_REGISTRY_ABI,
-      functionName: 'hasEntry',
+      functionName: "hasEntry",
       args: [address as `0x${string}`, tx.hash as `0x${string}`],
     })),
     query: {
       enabled: transactions.length > 0 && !!address,
-    }
+    },
   });
 
   // Merge data
@@ -92,7 +98,12 @@ export function useBaseTransactions() {
     hasNote: (hasEntriesData?.[index]?.result as unknown as boolean) || false,
   }));
 
-  return { transactions: transactionsWithNotes, isLoading, error, refetch: fetchTransactions };
+  return {
+    transactions: transactionsWithNotes,
+    isLoading,
+    error,
+    refetch: fetchTransactions,
+  };
 }
 
 /**
@@ -106,13 +117,13 @@ export function useHasJournalEntry(txHash: string) {
       {
         address: JOURNAL_REGISTRY_ADDRESS,
         abi: JOURNAL_REGISTRY_ABI,
-        functionName: 'hasEntry',
+        functionName: "hasEntry",
         args: [address as `0x${string}`, txHash as `0x${string}`],
       },
       {
         address: JOURNAL_REGISTRY_ADDRESS,
         abi: JOURNAL_REGISTRY_ABI,
-        functionName: 'getEntry',
+        functionName: "getEntry",
         args: [address as `0x${string}`, txHash as `0x${string}`],
       },
     ],
@@ -136,30 +147,30 @@ function getMockTransactions(address: string): Transaction[] {
   const now = new Date();
   return [
     {
-      hash: '0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef',
+      hash: "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
       date: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000),
-      amount: '0.05',
+      amount: "0.05",
       from: address,
-      to: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0',
-      type: 'sent',
+      to: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0",
+      type: "sent",
       hasNote: false,
     },
     {
-      hash: '0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
+      hash: "0xabcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890",
       date: new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000),
-      amount: '0.1',
-      from: '0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0',
+      amount: "0.1",
+      from: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb0",
       to: address,
-      type: 'received',
+      type: "received",
       hasNote: false,
     },
     {
-      hash: '0x9876543210fedcba9876543210fedcba9876543210fedcba9876543210fedcba',
+      hash: "0x9876543210fedcba9876543210fedcba9876543210fedcba9876543210fedcba",
       date: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
-      amount: '0.025',
+      amount: "0.025",
       from: address,
-      to: '0x1234567890abcdef1234567890abcdef12345678',
-      type: 'sent',
+      to: "0x1234567890abcdef1234567890abcdef12345678",
+      type: "sent",
       hasNote: false,
     },
   ];

@@ -13,9 +13,11 @@ BaseLog uses IPFS (InterPlanetary File System) to store journal entries in a dec
 ## Setup Pinata (Recommended IPFS Provider)
 
 ### 1. Create a Pinata Account
+
 Visit [https://app.pinata.cloud/](https://app.pinata.cloud/) and sign up for a free account.
 
 ### 2. Get Your JWT Token
+
 1. Go to **API Keys** in the Pinata dashboard
 2. Click **New Key**
 3. Select these permissions:
@@ -27,6 +29,7 @@ Visit [https://app.pinata.cloud/](https://app.pinata.cloud/) and sign up for a f
 6. **IMPORTANT**: Copy the JWT token immediately (you won't see it again!)
 
 ### 3. Add to Environment Variables
+
 Create a `.env.local` file in the project root:
 
 ```bash
@@ -38,10 +41,10 @@ NEXT_PUBLIC_PINATA_JWT=your_jwt_token_here
 You can test your IPFS connection by running this in the browser console:
 
 ```javascript
-import { testIPFSConnection } from '@/lib/ipfs';
+import { testIPFSConnection } from "@/lib/ipfs";
 
-testIPFSConnection().then(result => {
-  console.log('IPFS Connected:', result);
+testIPFSConnection().then((result) => {
+  console.log("IPFS Connected:", result);
 });
 ```
 
@@ -70,6 +73,7 @@ Journal entries are stored as JSON with this structure:
 ## IPFS Gateways
 
 The app uses multiple IPFS gateways for redundancy:
+
 1. **Pinata Gateway** (primary) - `https://gateway.pinata.cloud/ipfs/{cid}`
 2. **IPFS.io** (fallback) - `https://ipfs.io/ipfs/{cid}`
 3. **Cloudflare** (fallback) - `https://cloudflare-ipfs.com/ipfs/{cid}`
@@ -77,30 +81,36 @@ The app uses multiple IPFS gateways for redundancy:
 ## Troubleshooting
 
 ### "IPFS service not configured" error
+
 - Make sure `NEXT_PUBLIC_PINATA_JWT` is set in your `.env.local` file
 - Restart your development server after adding environment variables
 
 ### "IPFS authentication failed" error
+
 - Your JWT token may be invalid or expired
 - Generate a new API key in Pinata dashboard
 
 ### "Rate limit exceeded" error
+
 - Pinata free tier has limits (1GB storage, 100GB bandwidth/month)
 - Consider upgrading to a paid plan or implementing request throttling
 
 ### Uploads are slow
+
 - IPFS uploads can take 5-15 seconds depending on network conditions
 - The UI shows progress indicators during the upload process
 
 ## Cost & Limits
 
 ### Pinata Free Tier
+
 - 1 GB total storage
 - 100 GB bandwidth per month
 - Unlimited pins
 - Perfect for development and small-scale production
 
 ### Pinata Paid Plans
+
 - Picnic Plan: $20/month - 100GB storage, 1TB bandwidth
 - Submarine Plan: $100/month - 1TB storage, 10TB bandwidth
 
@@ -109,19 +119,22 @@ The app uses multiple IPFS gateways for redundancy:
 If you want to use a different IPFS service, you'll need to modify `src/lib/ipfs.ts`:
 
 ### Web3.Storage
-```typescript
-import { Web3Storage } from 'web3.storage';
 
-const client = new Web3Storage({ 
-  token: process.env.WEB3_STORAGE_TOKEN 
+```typescript
+import { Web3Storage } from "web3.storage";
+
+const client = new Web3Storage({
+  token: process.env.WEB3_STORAGE_TOKEN,
 });
 ```
 
 ### Infura IPFS
+
 ```typescript
 const projectId = process.env.INFURA_PROJECT_ID;
 const projectSecret = process.env.INFURA_PROJECT_SECRET;
-const auth = 'Basic ' + Buffer.from(projectId + ':' + projectSecret).toString('base64');
+const auth =
+  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
 ```
 
 ## Security Best Practices

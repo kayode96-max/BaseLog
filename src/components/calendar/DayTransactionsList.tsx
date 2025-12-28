@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Transaction } from '@/types';
-import { format } from 'date-fns';
-import { ArrowUpRight, ArrowDownLeft, X, ExternalLink } from 'lucide-react';
+import { Transaction } from "@/types";
+import { format } from "date-fns";
+import { ArrowUpRight, ArrowDownLeft, X, ExternalLink } from "lucide-react";
 
 interface DayTransactionsListProps {
   date: Date;
@@ -20,7 +20,7 @@ export function DayTransactionsList({
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-in fade-in duration-200"
         onClick={onClose}
       />
@@ -31,10 +31,11 @@ export function DayTransactionsList({
         <div className="px-6 py-5 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between bg-white/80 dark:bg-surface-dark/80 backdrop-blur-md sticky top-0 z-10">
           <div>
             <h3 className="text-xl font-bold text-slate-900 dark:text-white">
-              {format(date, 'MMMM d, yyyy')}
+              {format(date, "MMMM d, yyyy")}
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              {transactions.length} transaction{transactions.length !== 1 ? 's' : ''}
+              {transactions.length} transaction
+              {transactions.length !== 1 ? "s" : ""}
             </p>
           </div>
           <button
@@ -57,12 +58,12 @@ export function DayTransactionsList({
                 {/* Icon */}
                 <div
                   className={`h-10 w-10 rounded-full flex items-center justify-center shrink-0 ${
-                    tx.type === 'sent'
-                      ? 'bg-red-50 dark:bg-red-900/20 text-red-500'
-                      : 'bg-green-50 dark:bg-green-900/20 text-green-500'
+                    tx.type === "sent"
+                      ? "bg-red-50 dark:bg-red-900/20 text-red-500"
+                      : "bg-green-50 dark:bg-green-900/20 text-green-500"
                   }`}
                 >
-                  {tx.type === 'sent' ? (
+                  {tx.type === "sent" ? (
                     <ArrowUpRight className="w-5 h-5" />
                   ) : (
                     <ArrowDownLeft className="w-5 h-5" />
@@ -73,31 +74,38 @@ export function DayTransactionsList({
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="font-semibold text-slate-900 dark:text-white">
-                      {tx.type === 'sent' ? 'Sent' : 'Received'}
+                      {tx.type === "sent" ? "Sent" : "Received"}
                     </span>
-                    <span className={`font-mono font-medium ${
-                      tx.type === 'sent' ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'
-                    }`}>
-                      {tx.type === 'sent' ? '-' : '+'}{tx.amount} ETH
+                    <span
+                      className={`font-mono font-medium ${
+                        tx.type === "sent"
+                          ? "text-red-600 dark:text-red-400"
+                          : "text-green-600 dark:text-green-400"
+                      }`}
+                    >
+                      {tx.type === "sent" ? "-" : "+"}
+                      {tx.amount} ETH
                     </span>
                   </div>
-                  
+
                   <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                     <span className="font-mono truncate max-w-[120px]">
-                      {tx.type === 'sent' ? `To: ${tx.to}` : `From: ${tx.from}`}
+                      {tx.type === "sent" ? `To: ${tx.to}` : `From: ${tx.from}`}
                     </span>
-                    <span>{format(tx.date, 'h:mm a')}</span>
+                    <span>{format(tx.date, "h:mm a")}</span>
                   </div>
 
                   {tx.hasNote && (
                     <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700 flex items-center gap-2 text-xs font-medium text-gold">
-                      <span className="material-symbols-outlined text-[16px]">book</span>
+                      <span className="material-symbols-outlined text-[16px]">
+                        book
+                      </span>
                       Journal Entry Attached
                     </div>
                   )}
                 </div>
               </div>
-              
+
               {/* Hover Effect */}
               <div className="absolute inset-0 border-2 border-primary rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
             </div>

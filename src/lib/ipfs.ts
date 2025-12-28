@@ -1,16 +1,16 @@
-import axios from 'axios';
-import { IPFSMetadata } from '@/types';
+import axios from "axios";
+import { IPFSMetadata } from "@/types";
 
 const PINATA_API_KEY = process.env.NEXT_PUBLIC_PINATA_API_KEY;
 const PINATA_SECRET_KEY = process.env.NEXT_PUBLIC_PINATA_SECRET_KEY;
 const PINATA_JWT = process.env.NEXT_PUBLIC_PINATA_JWT;
 
 if (!PINATA_JWT) {
-  console.warn('⚠️ PINATA_JWT is not set. IPFS uploads will fail.');
+  console.warn("⚠️ PINATA_JWT is not set. IPFS uploads will fail.");
 }
 
 const pinataAxios = axios.create({
-  baseURL: 'https://api.pinata.cloud',
+  baseURL: "https://api.pinata.cloud",
   headers: {
     Authorization: `Bearer ${PINATA_JWT}`,
   },
@@ -24,25 +24,27 @@ const pinataAxios = axios.create({
  */
 export async function uploadToIPFS(metadata: IPFSMetadata): Promise<string> {
   if (!PINATA_JWT) {
-    throw new Error('IPFS service not configured. Please set PINATA_JWT environment variable.');
+    throw new Error(
+      "IPFS service not configured. Please set PINATA_JWT environment variable."
+    );
   }
 
   try {
     // Add versioning and metadata for better tracking
     const enrichedMetadata = {
-      version: '1.0.0',
+      version: "1.0.0",
       createdAt: new Date().toISOString(),
       data: metadata,
     };
 
-    const response = await pinataAxios.post('/pinning/pinJSONToIPFS', {
+    const response = await pinataAxios.post("/pinning/pinJSONToIPFS", {
       pinataContent: enrichedMetadata,
       pinataMetadata: {
         name: `BaseLog-${metadata.txHash.slice(0, 10)}-${Date.now()}`,
         keyvalues: {
           txHash: metadata.txHash,
           timestamp: metadata.timestamp.toString(),
-          category: metadata.category || 'uncategorized',
+          category: metadata.category || "uncategorized",
         },
       },
       pinataOptions: {
@@ -52,28 +54,32 @@ export async function uploadToIPFS(metadata: IPFSMetadata): Promise<string> {
 
     const cid = response.data.IpfsHash;
     console.log(`✅ Successfully uploaded to IPFS: ${cid}`);
-    
+
     return cid;
   } catch (error: any) {
-    console.error('❌ Error uploading to IPFS:', error);
-    
+    console.error("❌ Error uploading to IPFS:", error);
+
     if (error.response) {
       // Pinata API error
       const status = error.response.status;
       const message = error.response.data?.error || error.response.statusText;
-      
+
       if (status === 401) {
-        throw new Error('IPFS authentication failed. Please check your Pinata API key.');
+        throw new Error(
+          "IPFS authentication failed. Please check your Pinata API key."
+        );
       } else if (status === 429) {
-        throw new Error('Rate limit exceeded. Please try again later.');
+        throw new Error("Rate limit exceeded. Please try again later.");
       } else {
         throw new Error(`IPFS upload failed: ${message}`);
       }
     } else if (error.request) {
       // Network error
-      throw new Error('Network error. Please check your connection and try again.');
+      throw new Error(
+        "Network error. Please check your connection and try again."
+      );
     } else {
-      throw new Error(error.message || 'Failed to upload to IPFS');
+      throw new Error(error.message || "Failed to upload to IPFS");
     }
   }
 }
@@ -85,7 +91,7 @@ export async function uploadToIPFS(metadata: IPFSMetadata): Promise<string> {
  */
 export async function fetchFromIPFS(cid: string): Promise<IPFSMetadata> {
   if (!cid) {
-    throw new Error('No CID provided');
+    throw new Error("No CID provided");
   }
 
   try {
@@ -115,9 +121,9 @@ export async function fetchFromIPFS(cid: string): Promise<IPFSMetadata> {
       }
     }
 
-    throw lastError || new Error('All IPFS gateways failed');
+    throw lastError || new Error("All IPFS gateways failed");
   } catch (error: any) {
-    console.error('❌ Error fetching from IPFS:', error);
+    console.error("❌ Error fetching from IPFS:", error);
     throw new Error(`Failed to fetch from IPFS: ${error.message}`);
   }
 }
@@ -131,10 +137,10 @@ export async function testIPFSConnection(): Promise<boolean> {
   }
 
   try {
-    const response = await pinataAxios.get('/data/testAuthentication');
+    const response = await pinataAxios.get("/data/testAuthentication");
     return response.status === 200;
   } catch (error) {
-    console.error('IPFS connection test failed:', error);
+    console.error("IPFS connection test failed:", error);
     return false;
   }
 }
@@ -144,14 +150,14 @@ export async function testIPFSConnection(): Promise<boolean> {
  */
 export async function pinByCID(cid: string, name?: string): Promise<void> {
   try {
-    await pinataAxios.post('/pinning/pinByHash', {
+    await pinataAxios.post("/pinning/pinByHash", {
       hashToPin: cid,
       pinataMetadata: {
         name: name || `BaseLog-${cid}`,
       },
     });
   } catch (error) {
-    console.error('Error pinning by CID:', error);
-    throw new Error('Failed to pin by CID');
+    console.error("Error pinning by CID:", error);
+    throw new Error("Failed to pin by CID");
   }
 }

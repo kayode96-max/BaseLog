@@ -1,23 +1,24 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useAccount } from 'wagmi';
-import { Header } from '@/components/layout/Header';
-import { TransactionCalendar } from '@/components/calendar/TransactionCalendar';
-import { DayTransactionsList } from '@/components/calendar/DayTransactionsList';
-import { JournalModal } from '@/components/journal/JournalModal';
-import { useBaseTransactions } from '@/hooks/useBaseTransactions';
-import { Transaction } from '@/types';
-import { TrendingUp, BookOpen, Calendar, Loader2 } from 'lucide-react';
-import { LandingPage } from '@/components/landing/LandingPage';
+import { useState } from "react";
+import { useAccount } from "wagmi";
+import { Header } from "@/components/layout/Header";
+import { TransactionCalendar } from "@/components/calendar/TransactionCalendar";
+import { DayTransactionsList } from "@/components/calendar/DayTransactionsList";
+import { JournalModal } from "@/components/journal/JournalModal";
+import { useBaseTransactions } from "@/hooks/useBaseTransactions";
+import { Transaction } from "@/types";
+import { TrendingUp, BookOpen, Calendar, Loader2 } from "lucide-react";
+import { LandingPage } from "@/components/landing/LandingPage";
 
 export default function Home() {
   const { address, isConnected } = useAccount();
   const { transactions, isLoading, refetch } = useBaseTransactions();
-  
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [dayTransactions, setDayTransactions] = useState<Transaction[]>([]);
-  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
 
   const handleDateClick = (date: Date, txs: Transaction[]) => {
     setSelectedDate(date);
@@ -37,7 +38,9 @@ export default function Home() {
   const totalTransactions = transactions.length;
   const transactionsWithNotes = transactions.filter((tx) => tx.hasNote).length;
   const completionRate =
-    totalTransactions > 0 ? Math.round((transactionsWithNotes / totalTransactions) * 100) : 0;
+    totalTransactions > 0
+      ? Math.round((transactionsWithNotes / totalTransactions) * 100)
+      : 0;
 
   if (!isConnected) {
     return (
@@ -109,7 +112,10 @@ export default function Home() {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <TransactionCalendar transactions={transactions} onDateClick={handleDateClick} />
+          <TransactionCalendar
+            transactions={transactions}
+            onDateClick={handleDateClick}
+          />
         )}
 
         {/* Recent Activity */}
@@ -128,30 +134,35 @@ export default function Home() {
                   <div className="flex items-center gap-3">
                     <div
                       className={`h-10 w-10 rounded-full flex items-center justify-center ${
-                        tx.type === 'sent'
-                          ? 'bg-red-50 dark:bg-red-900/20'
-                          : 'bg-green-50 dark:bg-green-900/20'
+                        tx.type === "sent"
+                          ? "bg-red-50 dark:bg-red-900/20"
+                          : "bg-green-50 dark:bg-green-900/20"
                       }`}
                     >
                       <span
                         className={`material-symbols-outlined ${
-                          tx.type === 'sent' ? 'text-red-500' : 'text-green-500'
+                          tx.type === "sent" ? "text-red-500" : "text-green-500"
                         }`}
                       >
-                        {tx.type === 'sent' ? 'arrow_outward' : 'arrow_downward'}
+                        {tx.type === "sent"
+                          ? "arrow_outward"
+                          : "arrow_downward"}
                       </span>
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900 dark:text-white">
-                        {tx.type === 'sent' ? 'Sent' : 'Received'} {tx.amount} ETH
+                        {tx.type === "sent" ? "Sent" : "Received"} {tx.amount}{" "}
+                        ETH
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400 font-mono">
-                        {tx.type === 'sent' ? tx.to : tx.from}
+                        {tx.type === "sent" ? tx.to : tx.from}
                       </p>
                     </div>
                   </div>
                   {tx.hasNote && (
-                    <span className="material-symbols-outlined text-gold">check_circle</span>
+                    <span className="material-symbols-outlined text-gold">
+                      check_circle
+                    </span>
                   )}
                 </div>
               </button>

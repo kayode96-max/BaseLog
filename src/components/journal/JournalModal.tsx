@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Transaction } from '@/types';
-import { format } from 'date-fns';
-import { ArrowUpRight, ArrowDownLeft, Loader2 } from 'lucide-react';
-import { useJournalEntry } from '@/hooks/useJournalEntry';
+import { useState } from "react";
+import { Transaction } from "@/types";
+import { format } from "date-fns";
+import { ArrowUpRight, ArrowDownLeft, Loader2 } from "lucide-react";
+import { useJournalEntry } from "@/hooks/useJournalEntry";
 
 interface JournalModalProps {
   transaction: Transaction;
@@ -12,20 +12,39 @@ interface JournalModalProps {
   onSuccess: () => void;
 }
 
-const CATEGORIES = ['Food', 'Rent', 'Transport', 'Shopping', 'Income', 'Gift', 'Other'];
+const CATEGORIES = [
+  "Food",
+  "Rent",
+  "Transport",
+  "Shopping",
+  "Income",
+  "Gift",
+  "Other",
+];
 
-export function JournalModal({ transaction, onClose, onSuccess }: JournalModalProps) {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+export function JournalModal({
+  transaction,
+  onClose,
+  onSuccess,
+}: JournalModalProps) {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
 
-  const { saveJournalEntry, isUploading, isPending, isConfirming, isSuccess, error, currentStep } =
-    useJournalEntry();
+  const {
+    saveJournalEntry,
+    isUploading,
+    isPending,
+    isConfirming,
+    isSuccess,
+    error,
+    currentStep,
+  } = useJournalEntry();
 
   const handleSave = async () => {
     if (!title.trim()) {
-      alert('Please enter a title');
+      alert("Please enter a title");
       return;
     }
 
@@ -48,7 +67,7 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
         onClose();
       }, 2000);
     } catch (err) {
-      console.error('Failed to save journal entry:', err);
+      console.error("Failed to save journal entry:", err);
     }
   };
 
@@ -72,12 +91,12 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
             <div className="relative shrink-0 mt-1">
               <div
                 className={`h-10 w-10 rounded-full flex items-center justify-center ${
-                  transaction.type === 'sent'
-                    ? 'bg-red-50 dark:bg-red-900/20'
-                    : 'bg-green-50 dark:bg-green-900/20'
+                  transaction.type === "sent"
+                    ? "bg-red-50 dark:bg-red-900/20"
+                    : "bg-green-50 dark:bg-green-900/20"
                 }`}
               >
-                {transaction.type === 'sent' ? (
+                {transaction.type === "sent" ? (
                   <ArrowUpRight className="w-5 h-5 text-red-500" />
                 ) : (
                   <ArrowDownLeft className="w-5 h-5 text-green-500" />
@@ -85,23 +104,29 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
               </div>
               <div
                 className={`absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-white dark:border-[#1a202c] ${
-                  transaction.type === 'sent' ? 'bg-red-500' : 'bg-green-500'
+                  transaction.type === "sent" ? "bg-red-500" : "bg-green-500"
                 }`}
               />
             </div>
 
             <div className="flex flex-col">
               <p className="text-gray-900 dark:text-white text-[15px] font-semibold leading-snug">
-                {transaction.type === 'sent' ? 'Sent' : 'Received'} {transaction.amount} ETH{' '}
-                {transaction.type === 'sent' ? 'to' : 'from'}{' '}
+                {transaction.type === "sent" ? "Sent" : "Received"}{" "}
+                {transaction.amount} ETH{" "}
+                {transaction.type === "sent" ? "to" : "from"}{" "}
                 <span className="font-mono text-gray-500 dark:text-gray-400 font-medium">
-                  {transaction.type === 'sent'
-                    ? `${transaction.to.slice(0, 6)}...${transaction.to.slice(-4)}`
-                    : `${transaction.from.slice(0, 6)}...${transaction.from.slice(-4)}`}
+                  {transaction.type === "sent"
+                    ? `${transaction.to.slice(0, 6)}...${transaction.to.slice(
+                        -4
+                      )}`
+                    : `${transaction.from.slice(
+                        0,
+                        6
+                      )}...${transaction.from.slice(-4)}`}
                 </span>
               </p>
               <p className="text-gray-500 dark:text-gray-400 text-xs font-medium mt-1">
-                {format(transaction.date, 'MMM dd, yyyy • h:mm a')}
+                {format(transaction.date, "MMM dd, yyyy • h:mm a")}
               </p>
             </div>
           </div>
@@ -128,13 +153,15 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
                 <button
                   key={category}
                   onClick={() =>
-                    setSelectedCategory(selectedCategory === category ? null : category)
+                    setSelectedCategory(
+                      selectedCategory === category ? null : category
+                    )
                   }
                   disabled={isSaving}
                   className={`h-8 px-4 rounded-full border transition-colors flex items-center text-sm font-medium ${
                     selectedCategory === category
-                      ? 'bg-primary border-primary text-white'
-                      : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300'
+                      ? "bg-primary border-primary text-white"
+                      : "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300"
                   }`}
                 >
                   {category}
@@ -185,9 +212,9 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
             {isSaving ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                {currentStep === 'uploading' && 'Uploading to IPFS...'}
-                {currentStep === 'signing' && 'Waiting for signature...'}
-                {currentStep === 'confirming' && 'Confirming on Base...'}
+                {currentStep === "uploading" && "Uploading to IPFS..."}
+                {currentStep === "signing" && "Waiting for signature..."}
+                {currentStep === "confirming" && "Confirming on Base..."}
               </>
             ) : (
               <>
@@ -196,16 +223,40 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
               </>
             )}
           </button>
-          
+
           {/* Progress Indicator */}
           {isSaving && (
             <div className="mt-3 flex items-center justify-center gap-2">
-              <div className={`w-2 h-2 rounded-full ${currentStep === 'uploading' ? 'bg-primary animate-pulse' : currentStep !== 'idle' ? 'bg-green-500' : 'bg-gray-300'}`} />
-              <div className={`w-2 h-2 rounded-full ${currentStep === 'signing' ? 'bg-primary animate-pulse' : currentStep === 'confirming' || currentStep === 'success' ? 'bg-green-500' : 'bg-gray-300'}`} />
-              <div className={`w-2 h-2 rounded-full ${currentStep === 'confirming' ? 'bg-primary animate-pulse' : currentStep === 'success' ? 'bg-green-500' : 'bg-gray-300'}`} />
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  currentStep === "uploading"
+                    ? "bg-primary animate-pulse"
+                    : currentStep !== "idle"
+                    ? "bg-green-500"
+                    : "bg-gray-300"
+                }`}
+              />
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  currentStep === "signing"
+                    ? "bg-primary animate-pulse"
+                    : currentStep === "confirming" || currentStep === "success"
+                    ? "bg-green-500"
+                    : "bg-gray-300"
+                }`}
+              />
+              <div
+                className={`w-2 h-2 rounded-full ${
+                  currentStep === "confirming"
+                    ? "bg-primary animate-pulse"
+                    : currentStep === "success"
+                    ? "bg-green-500"
+                    : "bg-gray-300"
+                }`}
+              />
             </div>
           )}
-          
+
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
             Your note will be permanently stored on IPFS and linked on Base
           </p>
