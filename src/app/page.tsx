@@ -9,6 +9,7 @@ import { JournalModal } from '@/components/journal/JournalModal';
 import { useBaseTransactions } from '@/hooks/useBaseTransactions';
 import { Transaction } from '@/types';
 import { TrendingUp, BookOpen, Calendar, Loader2 } from 'lucide-react';
+import { LandingPage } from '@/components/landing/LandingPage';
 
 export default function Home() {
   const { address, isConnected } = useAccount();
@@ -42,57 +43,7 @@ export default function Home() {
     return (
       <>
         <Header />
-        <main className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] p-4">
-          <div className="text-center max-w-md">
-            <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-blue-400 to-primary flex items-center justify-center mx-auto mb-6">
-              <span className="material-symbols-outlined text-white text-[48px]">
-                account_balance_wallet
-              </span>
-            </div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Welcome to BaseLog
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-8">
-              Your on-chain transaction diary. Connect your wallet to start documenting your Web3
-              journey with permanent, timestamped notes.
-            </p>
-            <div className="flex flex-col gap-4 text-left bg-white dark:bg-surface-dark p-6 rounded-xl border border-gray-200 dark:border-gray-800">
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-primary">check_circle</span>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    Document Every Transaction
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Add context and memories to your on-chain activity
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-primary">cloud_upload</span>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    Permanent Storage
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Notes stored on IPFS and linked on Base blockchain
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <span className="material-symbols-outlined text-primary">calendar_month</span>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-white">
-                    Calendar View
-                  </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Visualize your transaction history in an intuitive calendar
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </main>
+        <LandingPage />
       </>
     );
   }

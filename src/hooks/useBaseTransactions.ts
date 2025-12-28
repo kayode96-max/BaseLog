@@ -74,7 +74,25 @@ export function useBaseTransactions() {
     }
   }
 
-  return { transactions, isLoading, error, refetch: fetchTransactions };
+  const { data: hasEntriesData } = useReadContracts({
+    contracts: transactions.map((tx) => ({
+      address: JOURNAL_REGISTRY_ADDRESS,
+      abi: JOURNAL_REGISTRY_ABI,
+      functionName: 'hasEntry',
+      args: [address as `0x${string}`, tx.hash as `0x${string}`],
+    })),
+    query: {
+      enabled: transactions.length > 0 && !!address,
+    }
+  });
+
+  // Merge data
+  const transactionsWithNotes = transactions.map((tx, index) => ({
+    ...tx,
+    hasNote: (hasEntriesData?.[index]?.result as unknown as boolean) || false,
+  }));
+
+  return { transactions: transactionsWithNotes, isLoading, error, refetch: fetchTransactions };
 }
 
 /**

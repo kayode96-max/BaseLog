@@ -20,7 +20,7 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
 
-  const { saveJournalEntry, isUploading, isPending, isConfirming, isSuccess, error } =
+  const { saveJournalEntry, isUploading, isPending, isConfirming, isSuccess, error, currentStep } =
     useJournalEntry();
 
   const handleSave = async () => {
@@ -185,9 +185,9 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
             {isSaving ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                {isUploading && 'Uploading to IPFS...'}
-                {isPending && 'Waiting for signature...'}
-                {isConfirming && 'Confirming on Base...'}
+                {currentStep === 'uploading' && 'Uploading to IPFS...'}
+                {currentStep === 'signing' && 'Waiting for signature...'}
+                {currentStep === 'confirming' && 'Confirming on Base...'}
               </>
             ) : (
               <>
@@ -196,6 +196,16 @@ export function JournalModal({ transaction, onClose, onSuccess }: JournalModalPr
               </>
             )}
           </button>
+          
+          {/* Progress Indicator */}
+          {isSaving && (
+            <div className="mt-3 flex items-center justify-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${currentStep === 'uploading' ? 'bg-primary animate-pulse' : currentStep !== 'idle' ? 'bg-green-500' : 'bg-gray-300'}`} />
+              <div className={`w-2 h-2 rounded-full ${currentStep === 'signing' ? 'bg-primary animate-pulse' : currentStep === 'confirming' || currentStep === 'success' ? 'bg-green-500' : 'bg-gray-300'}`} />
+              <div className={`w-2 h-2 rounded-full ${currentStep === 'confirming' ? 'bg-primary animate-pulse' : currentStep === 'success' ? 'bg-green-500' : 'bg-gray-300'}`} />
+            </div>
+          )}
+          
           <p className="text-xs text-gray-500 dark:text-gray-400 text-center mt-2">
             Your note will be permanently stored on IPFS and linked on Base
           </p>
